@@ -1,31 +1,30 @@
-package main
+package models
 
 import (
-	"fmt"
 	"time"
 )
 
 type Teacher struct {
-	Name string
-	Sub Subject 
-	Start_shift time.Time
-	End_shift time.Time
+	Name       string
+	Sub        Subject
+	StartShift time.Time
+	EndShift   time.Time
 }
 
 type Subject struct {
-	Name string
-	hours int
+	Name  string
+	Hours int
 }
 
 type Timeslot struct {
-	start time.Time
-	end time.Time
+	Start time.Time
+	End   time.Time
 }
 
 type Day struct {
-	periods []Timeslot
+	Periods []Timeslot
 }
 
 type Timetable struct {
-	week []Day
+	Week []Day
 }
