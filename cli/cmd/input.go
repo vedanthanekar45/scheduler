@@ -29,16 +29,17 @@ var inputCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		name_res := utils.Conformation("Name flag -n or --name not used. Use default name? [Y/n]: ")
-		if name_res {
-			if scheduleName == "" {
+		if scheduleName == "" {
+			if utils.Conformation("Name flag not provided. Use default name?") {
 				scheduleName = utils.RemoveDirectory(inputFile)
-				fmt.Printf("--name flag not provided. Using default name: %s\n", scheduleName)
+				fmt.Printf("Using default name: %s\n", scheduleName)
 			} else {
-				fmt.Printf("Schedule name provided: %s\n", scheduleName)
+				fmt.Println("Operation cancelled. Please provide a name using the -n or --name flag.")
+				os.Exit(1)
 			}
+		} else {
+			fmt.Printf("Schedule name provided: %s\n", scheduleName)
 		}
-		os.Exit(1)
 
 		fileContent, err := os.ReadFile(inputFile)
 		if err != nil {
