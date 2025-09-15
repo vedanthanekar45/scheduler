@@ -1,0 +1,26 @@
+{
+  "classGroupName": "Grade 9A",
+  "subjects": [
+    { "name": "Mathematics", "periodsPerWeek": 4 },
+    { "name": "Science", "periodsPerWeek": 4 },
+    { "name": "History", "periodsPerWeek": 3 }
+  ],
+  "teachers": [
+    {
+      "name": "Mr. Sharma",
+      "teachableSubjects": ["Mathematics"]
+    },
+    {
+      "name": "Ms. Gupta"
+    },
+    {
+      "teachableSubjects": ["History", "Science"]
+    }
+  ],
+  "timeslots": [
+    { "day": "Monday", "period": 1 },
+    { "day": "Monday", "period": 2 },
+    { "day": "Monday", "period": 3 },
+    { "day": "Tuesday", "period": 1 }
+  ]
+}
