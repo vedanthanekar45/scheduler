@@ -1,24 +1,22 @@
-# Go Scheduler Engine
+# Simple Task Scheduler Engine
 
 A simple, constraint-based scheduler written in Go. This project uses a backtracking algorithm to solve Constraint Satisfaction Problems (CSPs), starting with a simplified school timetable model.
 
 ---
 
-## ## What it Does
+## What it Does
 
 This program takes a problem definition—such as subjects, teachers, and time slots—from a JSON file and generates a valid, conflict-free schedule. The core logic is designed to be adaptable for other scheduling problems.
 
-
-
 ---
 
-## ## Getting Started
+## Getting Started
 
-### ### Prerequisites
+### Prerequisites
 
 * Go (version 1.18 or higher recommended)
 
-### ### How to Run
+### How to Run
 
 1.  **Clone the repository:**
     ```sh
@@ -37,11 +35,11 @@ This program takes a problem definition—such as subjects, teachers, and time s
 
 ---
 
-## ## Example Usage
+## Example Usage
 
 This example shows how to generate a timetable for a single class, "Grade 9A".
 
-### ### Input (`input.json`)
+### Input (`input.json`)
 
 This file defines the subjects to be scheduled, the teachers available to teach them, and the available time slots.
 
