@@ -4,27 +4,27 @@ import (
 	"time"
 )
 
-type Teacher struct {
+type OutputTeacher struct {
 	Name       string
-	Sub        Subject
+	Sub        OutputSubject
 	StartShift time.Time
 	EndShift   time.Time
 }
 
-type Subject struct {
+type OutputSubject struct {
 	Name  string
 	Hours int
 }
 
-type Timeslot struct {
+type OutputTimeslot struct {
 	Start time.Time
 	End   time.Time
 }
 
 type Day struct {
-	Periods []Timeslot
+	Periods []OutputTimeslot
 }
 
-type Timetable struct {
+type OutputTimetable struct {
 	Week []Day
 }

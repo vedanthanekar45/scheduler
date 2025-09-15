@@ -7,11 +7,11 @@ import (
 )
 
 func TestTeacherInit(t *testing.T) {
-	subject := Subject{Name: "Math", Hours: 5}
+	subject := OutputSubject{Name: "Math", Hours: 5}
 	start := time.Date(2025, 7, 18, 9, 0, 0, 0, time.Local)
 	end := time.Date(2025, 7, 18, 13, 0, 0, 0, time.Local)
 
-	teacher := Teacher{
+	teacher := OutputTeacher{
 		Name:       "Cassian Andor",
 		Sub:        subject,
 		StartShift: start,
