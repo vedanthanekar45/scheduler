@@ -1,8 +1,10 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
+	"scheduler/v2/models"
 	"scheduler/v2/utils"
 
 	"github.com/spf13/cobra"
@@ -43,6 +45,15 @@ var inputCmd = &cobra.Command{
 			fmt.Printf("Error reading file: \n%v\n", err)
 			os.Exit(1)
 		}
+
+		var problemDef models.ProblemDefinition
+		err = json.Unmarshal(fileContent, &problemDef)
+		if err != nil {
+			fmt.Printf("Error: Malformed JSON in %s: %v\n", inputFile, err)
+			os.Exit(1)
+		}
+
+		utils.CheckValues(problemDef)
 
 		fmt.Printf("Successfully read %d bytes from %s\n", len(fileContent), inputFile)
 	},
