@@ -15,6 +15,8 @@ var (
 	scheduleName string
 )
 
+// Sample input command for testing: ./scheduler input -p tests/valid.json -n school
+
 var inputCmd = &cobra.Command{
 	Use:   "input",
 	Short: "Takes a JSON file as input for the scheduling engine",

@@ -7,7 +7,7 @@ import (
 // generateCmd represents the generate command
 var generateCmd = &cobra.Command{
 	Use:   "generate",
-	Short: "",
+	Short: "Generate your timetable",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
