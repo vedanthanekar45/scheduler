@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"scheduler/v2/models"
 	"scheduler/v2/utils"
 
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -23,6 +25,8 @@ var inputCmd = &cobra.Command{
 	Long:  `Processes a given JSON file that defines the constraints, resources, and tasks required to generate a schedule.`,
 
 	Run: func(cmd *cobra.Command, args []string) {
+
+		// Check if the input file is JSON
 		utils.CheckJSON(inputFile)
 		fmt.Printf("Reading data from file...\n")
 
@@ -31,6 +35,9 @@ var inputCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
+		/* Handle the name of the file.
+		   If provided, then okay.
+		   If not, then ask the user if they want to use a default name. */
 		if scheduleName == "" {
 			if utils.Conformation("Name flag not provided. Use default name?") {
 				scheduleName = utils.RemoveDirectory(inputFile)
@@ -49,6 +56,9 @@ var inputCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
+		// Get and do a sample operation on the file contents
+		// For example, checking the number of characters..
+
 		var problemDef models.ProblemDefinition
 		err = json.Unmarshal(fileContent, &problemDef)
 		if err != nil {
@@ -59,6 +69,34 @@ var inputCmd = &cobra.Command{
 		utils.CheckValues(problemDef)
 
 		fmt.Printf("Successfully read %d bytes from %s\n", len(fileContent), inputFile)
+
+		// Storing the input constraint and requirements file locally
+		storageDir := ".constraints"
+		if err := os.MkdirAll(storageDir, 0755); err != nil {
+			fmt.Println("Error creating storage directory!")
+			os.Exit(1)
+		}
+
+		outputPath := filepath.Join(storageDir + scheduleName + ".json")
+
+		// Check if the name already exists
+		if _, err := os.Stat(outputPath); err == nil {
+			color.Red("Error: A schedule named '%s' already exists!", scheduleName)
+			os.Exit(1)
+		}
+
+		outputData, err := json.MarshalIndent(problemDef, "", "  ")
+		if err != nil {
+			color.Red("Error preparing data for saving: %v", err)
+			os.Exit(1)
+		}
+
+		// Make the new JSON file
+		if err := os.WriteFile(outputPath, outputData, 0644); err != nil {
+			color.Red("Error saving schedule file: %v", err)
+			os.Exit(1)
+		}
+		color.Green("Schedule '%s' was successfully saved.", scheduleName)
 	},
 }
 
