@@ -12,6 +12,9 @@ import (
 )
 
 // generateCmd represents the generate command
+
+// Sample command to run it: ./scheduler generate [scheduleName]
+
 var generateCmd = &cobra.Command{
 	Use:   "generate",
 	Short: "Generate a schedule from your previously saved constraints file.",
