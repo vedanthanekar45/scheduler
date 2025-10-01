@@ -1,34 +1,49 @@
 package cmd
 
 import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"path/filepath"
+	"scheduler/v2/models"
+
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
 // generateCmd represents the generate command
 var generateCmd = &cobra.Command{
 	Use:   "generate",
-	Short: "Generate your timetable",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Generate a schedule from your previously saved constraints file.",
+	Long: `Reads a saved schedule by its name, runs the solver engine, and outputs a valid 
+	timetable.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		scheduleName := args[0]
+		storageDir := "schedules"
 
+		filePath := filepath.Join(storageDir, scheduleName+".json")
+
+		// Looking for the file
+		fileContent, err := os.ReadFile(filePath)
+		if err != nil {
+			color.Red("Error: No schedule named '%s' found.", scheduleName)
+			fmt.Printf("Looked for file at: %s\n", filePath)
+			os.Exit(1)
+		}
+
+		// Try to parse the data inside the file
+		var problemDef models.ProblemDefinition
+		if err := json.Unmarshal(fileContent, &problemDef); err != nil {
+			color.Red("Error parsing saved schedule file: %v", err)
+			os.Exit(1)
+		}
+
+		color.Green("Data parsed successfully. Starting the solver...")
+
+		/* COMMANDS TO START THE SOLVER GOES HERE */
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(generateCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// generateCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// generateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
